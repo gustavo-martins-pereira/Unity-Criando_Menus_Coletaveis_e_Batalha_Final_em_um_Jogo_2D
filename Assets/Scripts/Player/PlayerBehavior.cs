@@ -1,88 +1,78 @@
 using UnityEngine;
 
-// Classe responsável pelo comportamento do jogador, como o movimento horizontal e o pulo.
-// Este script deve ser anexado ao GameObject do jogador na Unity.
+// Classe responsável pelo comportamento do jogador, incluindo movimento, pulo e ataque
 public class PlayerBehavior : MonoBehaviour
 {
-    // Velocidade de movimento do jogador no eixo horizontal.
-    // [SerializeField] permite que esta variável seja configurada no Editor da Unity
-    // sem precisar torná-la pública, mantendo o princípio de encapsulamento.
+    // Velocidade de movimento horizontal do jogador
     [SerializeField] private float moveSpeed = 5;
 
-    // Força aplicada no pulo do jogador.
-    // Também configurável diretamente pelo Editor da Unity.
+    // Força aplicada no pulo do jogador
     [SerializeField] private float jumpForce = 3;
 
+    // Cabeçalho para organizar as propriedades de ataque no inspetor
     [Header("Attack Properties")]
-    // Definindo o alcance do ataque do jogador.
+
+    // Alcance do ataque do jogador
     [SerializeField] private float attackRange = 1f;
 
-    // Posição de origem do ataque, que é onde o alcance do ataque será medido.
+    // Transform representando a posição de origem do ataque
     [SerializeField] private Transform attackPosition;
 
-    // Layer que indica em quais objetos o ataque pode colidir.
+    // Máscara de layer para especificar quais objetos podem ser atingidos pelo ataque
     [SerializeField] private LayerMask attackLayer;
 
-    // Referência ao componente Rigidbody2D anexado ao jogador.
-    // O Rigidbody2D é responsável pela física do jogador, como movimento e colisões.
+    // Referência ao componente Rigidbody2D anexado ao jogador
     private new Rigidbody2D rigidbody2D;
 
-    // Referência ao script `IsGroundedChecker` que verifica se o jogador está no chão.
-    // Este script ajuda a garantir que o jogador só possa pular se estiver no chão.
+    // Referência ao script que verifica se o jogador está no chão
     private IsGroundedChecker isGroundedChecker;
 
-    // Referência ao componente SpriteRenderer para manipular a orientação visual do jogador.
-    // O SpriteRenderer controla a imagem do personagem na tela, incluindo sua direção.
+    // Referência ao componente SpriteRenderer para manipular a orientação do sprite do jogador
     private SpriteRenderer spriteRenderer;
 
+    // Referência ao componente Health que gerencia a saúde do jogador
     private Health health;
 
-    // Método chamado automaticamente pela Unity quando o objeto é inicializado.
-    // Aqui, componentes essenciais do jogador são referenciados.
+    // Método chamado ao inicializar o objeto no início da execução do jogo
     private void Awake()
     {
-        // Obtém o componente Rigidbody2D anexado ao GameObject.
+        // Obtém e armazena o componente Rigidbody2D do jogador
         rigidbody2D = GetComponent<Rigidbody2D>();
 
-        // Obtém o componente IsGroundedChecker para verificar se o jogador está no chão.
+        // Obtém e armazena o componente IsGroundedChecker para verificação de chão
         isGroundedChecker = GetComponent<IsGroundedChecker>();
 
-        // Obtém o componente SpriteRenderer para manipular a orientação visual do jogador.
+        // Obtém e armazena o componente SpriteRenderer para manipulação visual
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        // Obtém e armazena o componente Health para gerenciamento da saúde
         health = GetComponent<Health>();
 
+        // Inscreve métodos para os eventos OnDead e OnHurt do componente Health
         health.OnDead += HandlePlayerDeath;
-        health.OnHurt += PlayHurtSound;
+        health.OnHurt += HandleHurt;
     }
 
-    // Método chamado automaticamente pela Unity no início da execução do jogo.
-    // Aqui, configuramos eventos ou inicializações que dependem de outras instâncias.
+    // Método chamado uma vez no início do jogo
     private void Start()
     {
-        // Inscreve o método `HandleJump` no evento OnJump do InputManager.
-        // Isso significa que toda vez que o jogador pressionar o botão de pulo, este método será chamado.
+        // Inscreve o método HandleJump ao evento OnJump do InputManager
         GameManager.Instance.InputManager.OnJump += HandleJump;
     }
 
-    // Método chamado automaticamente pela Unity a cada quadro (frame).
-    // Gerencia o movimento horizontal do jogador com base na entrada do jogador.
+    // Método chamado a cada frame para atualizar o estado do jogador
     private void Update()
     {
-        // Obtém o valor de entrada horizontal do jogador a partir do InputManager.
-        // O valor de moveDirection vai de -1 (esquerda) a 1 (direita), dependendo da entrada do jogador.
+        // Obtém o valor de entrada de movimento horizontal do jogador
         float moveDirection = GameManager.Instance.InputManager.Movement;
 
-        // Define a nova velocidade horizontal do jogador, mantendo a velocidade vertical.
-        // Isso move o jogador para a esquerda ou direita com base no valor de moveDirection.
+        // Calcula a nova velocidade horizontal baseada na entrada do jogador
         Vector2 vectorMoveDirection = new Vector2(moveDirection * moveSpeed, rigidbody2D.linearVelocity.y);
 
-        // Aplica o movimento no Rigidbody2D, alterando sua velocidade.
+        // Aplica a nova velocidade ao Rigidbody2D
         rigidbody2D.linearVelocity = vectorMoveDirection;
 
-        // Ajusta a orientação do sprite com base na direção do movimento.
-        // O personagem vira para a direita (não inverte a imagem) se move para a direita.
-        // Caso contrário, vira para a esquerda (inverte a imagem).
+        // Atualiza a orientação do sprite com base na direção do movimento
         if (vectorMoveDirection.x > 0)
         {
             spriteRenderer.flipX = false;
@@ -93,74 +83,78 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    // Método para reproduzir o som de caminhada do jogador
     private void PlayWalkSound()
     {
         GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerWalk);
     }
 
-    // Método responsável por gerenciar o pulo do jogador.
+    // Método responsável por realizar o pulo do jogador
     private void HandleJump()
     {
-        // Verifica se o jogador está no chão antes de permitir o pulo.
-        // Se o jogador não estiver no chão, ele não pode pular.
+        // Verifica se o jogador está no chão antes de permitir o pulo
         if (!isGroundedChecker.IsGrounded()) return;
 
-        // Aplica uma força para cima no Rigidbody2D para realizar o pulo.
-        // A força do pulo é controlada pela variável jumpForce.
+        // Aplica força para cima ao Rigidbody2D para executar o pulo
         rigidbody2D.linearVelocity += Vector2.up * jumpForce;
 
+        // Reproduz o som do pulo
         GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerJump);
     }
 
-    // Método que gerencia o ataque do jogador.
+    // Método que executa o ataque do jogador
     private void Attack()
     {
-        // Verifica colisores dentro do alcance do ataque e no layer especificado.
-        // A função OverlapCircleAll retorna todos os objetos dentro de um círculo no mundo.
+        // Obtém os objetos dentro do alcance do ataque com a máscara de layer especificada
         Collider2D[] hittedEnemies = Physics2D.OverlapCircleAll(attackPosition.position, attackRange, attackLayer);
 
-        // Aplica dano aos inimigos detectados.
-        // Para cada inimigo atingido, verificamos se ele possui o componente Health.
-        // Se o inimigo tiver o componente, chamamos o método TakeDamage() para aplicar dano.
+        // Itera pelos objetos atingidos e aplica dano
         foreach (Collider2D hittedEnemy in hittedEnemies)
         {
+            // Verifica se o objeto possui o componente Health e aplica dano
             if (hittedEnemy.TryGetComponent(out Health enemyHealth))
             {
                 enemyHealth.TakeDamage();
             }
         }
 
+        // Reproduz o som de ataque
         GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerAttack);
     }
 
-    // Método visual para desenhar o alcance do ataque no Editor da Unity.
-    // Isso ajuda a visualizar no Editor o alcance do ataque do jogador.
+    // Método usado para desenhar o alcance do ataque no editor
     private void OnDrawGizmos()
     {
-        // Define a cor do Gizmo que será desenhado no Editor.
+        // Define a cor do Gizmo no editor
         Gizmos.color = Color.yellow;
 
-        // Desenha um círculo de alcance do ataque no Editor.
+        // Desenha o alcance do ataque como um círculo
         Gizmos.DrawWireSphere(attackPosition.position, attackRange);
     }
 
-    private void PlayHurtSound()
+    // Método acionado quando o jogador é ferido
+    private void HandleHurt()
     {
+        // Reproduz o som de dano
         GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerHurt);
+
+        // Atualiza o texto de vidas na interface do usuário
+        GameManager.Instance.UIManager.UpdateLivesText(health.GetLives());
     }
 
-    // Método chamado quando o jogador morre.
+    // Método acionado quando o jogador morre
     private void HandlePlayerDeath()
     {
-        // Desativa o collider e congela o Rigidbody2D do jogador.
-        // Isso impede que o jogador continue interagindo com o ambiente após a morte.
+        // Desativa o collider do jogador para evitar interações
         GetComponent<Collider2D>().enabled = false;
+
+        // Congela o Rigidbody2D para evitar movimentação
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 
-        // Desativa os controles do jogador.
-        // Isso impede que o jogador continue tentando se mover após a morte.
+        // Desativa o controle do jogador
         GameManager.Instance.InputManager.DisablePlayerInput();
 
+        // Reproduz o som de morte
         GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerDeath);
     }
 }

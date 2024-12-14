@@ -1,43 +1,47 @@
 using System;
 using UnityEngine;
 
-// Classe responsável pela gestão da saúde do jogador (ou de qualquer outro objeto com saúde).
-// Este script deve ser anexado ao GameObject que representa o jogador ou outro objeto que tenha pontos de vida.
+// Classe responsável pela gestão da saúde de um jogador ou objeto
 public class Health : MonoBehaviour
 {
-    // Número de vidas (pontos de vida) que o jogador ou objeto possui.
+    // Define a quantidade inicial de vidas do jogador ou objeto
     [SerializeField] private int lives;
 
-    // Evento acionado quando o jogador morre (lives <= 0).
+    // Evento acionado quando a vida do jogador ou objeto chega a zero ou menos
     public event Action OnDead;
 
-    // Evento acionado quando o jogador leva dano, mas ainda tem vida restante.
+    // Evento acionado quando o jogador ou objeto sofre dano, mas ainda possui vidas restantes
     public event Action OnHurt;
 
-    // Método público para receber dano e diminuir a quantidade de vidas.
-    // Este método pode ser chamado de outros scripts ou eventos quando o jogador receber dano.
+    // Método para obter o valor atual de vidas
+    public int GetLives()
+    {
+        // Retorna o número atual de vidas
+        return lives;
+    }
+
+    // Método público chamado quando o jogador ou objeto sofre dano
     public void TakeDamage()
     {
-        // Reduz a quantidade de vidas do jogador.
+        // Reduz o valor de vidas em 1
         lives--;
 
-        // Chama o método que lida com as consequências de ter levado dano.
+        // Chama o método que gerencia os eventos de dano ou morte
         HandleDamageTaken();
     }
 
-    // Método privado que lida com as consequências após o dano ser recebido.
-    // Se as vidas acabaram, o evento de morte é acionado, senão, o evento de dano é acionado.
+    // Método privado que verifica o estado de vidas e aciona os eventos correspondentes
     private void HandleDamageTaken()
     {
-        // Verifica se as vidas do jogador chegaram a 0 ou menos.
+        // Verifica se o número de vidas é menor ou igual a zero
         if (lives <= 0)
         {
-            // Se sim, aciona o evento OnDead, indicando que o jogador morreu.
+            // Aciona o evento de morte caso não haja mais vidas
             OnDead?.Invoke();
         }
         else
         {
-            // Caso contrário, aciona o evento OnHurt, indicando que o jogador foi ferido.
+            // Aciona o evento de dano caso ainda existam vidas
             OnHurt?.Invoke();
         }
     }
