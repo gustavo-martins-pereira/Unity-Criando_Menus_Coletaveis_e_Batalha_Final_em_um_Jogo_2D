@@ -22,7 +22,11 @@ URL do curso -> [Unity: Criando Menus, Coletáveis e Batalha Final em um Jogo 2D
 ## &#x1F517; Links Úteis
 * [Projeto Base](https://github.com/gustavo-martins-pereira/Unity-Criando_um_Jogo_Metroidvania_2D) - Repositório do projeto base.
 
-## 
+## 01 - Adicionando Menu no Jogo
+* Criar um menu inicial e de opções com o Canvas da Unity para deixar o jogo mais completo e aprimorado.
+* Como adicionar uma ação ao botão de forma profissional e adequada.
+* Acessar e manipular o audio mixer na Unity para ajustar volumes de diferentes grupos de áudio.
+* Expor parâmetros de áudio na Unity para permitir a manipulação desses valores através de scripts.
 
 ## :black_nib: Licença
 [Unlicense](https://unlicense.org)

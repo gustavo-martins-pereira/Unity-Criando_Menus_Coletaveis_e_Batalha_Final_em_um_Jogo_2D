@@ -1,60 +1,68 @@
 using System;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 // Classe responsável por gerenciar os controles de entrada do jogador.
-// Este gerenciador encapsula os comandos do jogador, organizando e reutilizando-os de forma mais eficiente.
+// Este gerenciador encapsula os comandos do jogador, organizando e reutilizando-os de forma eficiente.
 public class InputManager
 {
-    // Objeto responsável por armazenar os controles do jogador.
-    // Ele é baseado no sistema Input System, que permite mapear e gerenciar comandos de entrada de forma mais flexível.
-    // O objeto é inicializado no construtor da classe.
+    // Objeto que armazena os controles do jogador, utilizando o sistema Input System.
+    // Ele é inicializado no construtor da classe e gerencia todas as ações configuradas no mapa de controle.
     private readonly PlayerControlls playerControlls;
 
     // Propriedade que retorna o valor do movimento horizontal do jogador.
-    // O valor é lido do mapa de controles, que é configurado usando o sistema Input System.
-    // Esse valor será utilizado para mover o jogador para a esquerda ou direita.
+    // Esse valor será usado para controlar o deslocamento do jogador (esquerda/direita).
     public float Movement => playerControlls.Player.Movement.ReadValue<float>();
 
-    // Evento que será disparado quando o jogador pressionar o botão de pulo.
-    // Outros scripts podem se inscrever nesse evento para reagir ao comando de pulo.
-    public event Action OnJump;
-
-    // Evento que será disparado quando o jogador pressionar o botão de ataque.
-    // Outros scripts podem se inscrever nesse evento para reagir ao comando de ataque.
-    public event Action OnAttack;
+    // Eventos para ações específicas, permitindo que outros scripts se inscrevam para reagir a essas entradas.
+    public event Action OnJump;          // Disparado quando o jogador pressiona o botão de pulo.
+    public event Action OnAttack;        // Disparado quando o jogador pressiona o botão de ataque.
+    public event Action OnMenuOpenClose; // Disparado ao abrir/fechar o menu.
 
     // Construtor da classe InputManager.
-    // Ele é chamado ao criar uma nova instância do InputManager.
-    // Este construtor é responsável por inicializar os controles do jogador e ativá-los para começar a receber inputs.
+    // Inicializa os controles do jogador e registra callbacks para os eventos configurados no Input System.
     public InputManager()
     {
-        // Cria uma nova instância dos controles do jogador com base no mapeamento gerado pelo Input System.
+        // Instancia o mapa de controles do jogador gerado pelo Input System.
         playerControlls = new PlayerControlls();
 
-        // Ativa os controles, permitindo que o sistema comece a captar os inputs do jogador.
+        // Ativa o mapa de controles para começar a receber entradas do jogador.
         playerControlls.Enable();
+        EnableUIInput();
 
-        // Adiciona callbacks aos eventos de ações do jogador, para que, quando o jogador realizar as ações (pular, atacar),
-        // os métodos correspondentes sejam chamados.
+        // Registra os callbacks para os eventos específicos de pulo, ataque e abertura/fechamento do menu.
         playerControlls.Player.Jump.performed += OnJumpPerformed;
         playerControlls.Player.Attack.performed += OnAttackPerformed;
+        playerControlls.UI.OpenCloseMenu.performed += OpenClosePauseMenuPerformed;
     }
 
-    // Método chamado quando o jogador pressiona o botão de pulo.
-    // Este método dispara o evento `OnJump`, notificando os scripts inscritos para reagir ao comando de pulo.
+    // Método para ativar os controles relacionados à interface do usuário (UI).
+    // Isso permite que inputs destinados à UI sejam captados.
+    public void EnableUIInput() => playerControlls.UI.Enable();
+
+    // Callback disparado quando o jogador tenta abrir ou fechar o menu.
+    // Este método verifica se a cena atual é a de gameplay antes de disparar o evento `OnMenuOpenClose`.
+    private void OpenClosePauseMenuPerformed(InputAction.CallbackContext obj)
+    {
+        if (SceneManager.GetActiveScene().name != "Gameplay") return;
+        OnMenuOpenClose?.Invoke(); // Dispara o evento, se houver algum inscrito.
+    }
+
+    // Callback disparado quando o jogador pressiona o botão de pulo.
+    // Este método dispara o evento `OnJump` para notificar os scripts inscritos.
     private void OnJumpPerformed(InputAction.CallbackContext context)
     {
-        OnJump?.Invoke(); // O operador `?.` verifica se há algum inscrito no evento antes de dispará-lo.
+        OnJump?.Invoke(); // O operador `?.` verifica se há inscritos antes de disparar o evento.
     }
 
-    // Método chamado quando o jogador pressiona o botão de ataque.
-    // Este método dispara o evento `OnAttack`, notificando os scripts inscritos para reagir ao comando de ataque.
+    // Callback disparado quando o jogador pressiona o botão de ataque.
+    // Este método dispara o evento `OnAttack` para notificar os scripts inscritos.
     private void OnAttackPerformed(InputAction.CallbackContext context)
     {
-        OnAttack?.Invoke(); // O operador `?.` verifica se há algum inscrito no evento antes de dispará-lo.
+        OnAttack?.Invoke();
     }
 
-    // Método para desabilitar os controles do jogador.
-    // Isso pode ser útil para pausar o jogo ou desativar os controles durante uma cutscene, por exemplo.
+    // Método para desabilitar os controles relacionados ao jogador.
+    // Isso pode ser útil, por exemplo, para pausas no jogo ou cutscenes.
     public void DisablePlayerInput() => playerControlls.Player.Disable();
 }
