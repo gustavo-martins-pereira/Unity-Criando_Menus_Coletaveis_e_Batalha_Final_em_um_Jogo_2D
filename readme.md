@@ -47,5 +47,13 @@ URL do curso -> [Unity: Criando Menus, Coletáveis e Batalha Final em um Jogo 2D
 * Corrigir a movimentação do chefão para que ele interaja com os objetos na cena da forma que planejamos.
 * Utilizar o parâmetro trigger do componente Collider2D para acionar o comportamento do chefão apenas quando necessário.
 
+## 05 - Implementações Finais e Polimento do Jogo
+* Corrigir o problema de colisão que o Tilemap Collider trás na movimentação do personagem, para que o jogo não tenha erros relacionados a isso.
+* Criar e utilizar um Physics Material 2D para evitar que nosso personagem trave a movimentação quando encostar em uma parede no pulo.
+* Criar a condição de derrota para, caso o jogador perca, ele possa tentar novamente o jogo.
+* Criar uma condição de vitória, para mostrar que o jogador ganhou e finalizou o jogo.
+* Fazer uma tela de créditos, mostrando todos os colaboradores no processo de desenvolvimento do seu jogo.
+* Criar o Core Game Loop no jogo para que o jogador consiga ser redirecionado ao menu inicial ao finalizar.
+
 ## :black_nib: Licença
 [Unlicense](https://unlicense.org)

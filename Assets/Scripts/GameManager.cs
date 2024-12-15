@@ -1,10 +1,13 @@
+using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Classe responsável por gerenciar o estado geral do jogo e disponibilizar sistemas centrais.
 // Implementa o padrão Singleton para garantir que apenas uma instância do GameManager exista no jogo.
 public class GameManager : MonoBehaviour
 {
-    // Declaração de uma instância estática única para o GameManager, usada para acessar o GameManager de forma global.
+    // Instância estática única para o GameManager, usada para acessar o GameManager de forma global.
     public static GameManager Instance;
 
     // Referência pública ao gerenciador de áudio do jogo, permitindo acesso e controle de sons e música.
@@ -62,6 +65,15 @@ public class GameManager : MonoBehaviour
         // Cria uma nova instância do InputManager, responsável por gerenciar as entradas do jogador.
         this.InputManager = new InputManager();
 
+        // Subscrição aos eventos de morte do jogador e do chefe para exibir as interfaces correspondentes.
+        player.GetComponent<Health>().OnDead += HandleGameOver;
+        bossBehavior.GetComponent<Health>().OnDead += HandleVictory;
+    }
+
+    // Método chamado pelo Unity uma vez durante a inicialização do jogo.
+    // Inicializa os textos da interface e registra eventos adicionais.
+    private void Start()
+    {
         // Atualiza o texto da interface do usuário para exibir o total de chaves e o número de chaves restantes.
         UIManager.UpdateKeysLeftText(totalKeys, keysLeft);
 
@@ -75,6 +87,31 @@ public class GameManager : MonoBehaviour
     private void ActivateBossBehavior()
     {
         bossBehavior.StartChasing();
+    }
+
+    // Método chamado quando o jogador morre.
+    // Exibe o painel de Game Over na interface do usuário.
+    private void HandleGameOver()
+    {
+        UIManager.OpenGamerOverPanel();
+    }
+
+    // Método chamado quando o chefe morre.
+    // Exibe o texto de vitória e inicia a transição para a cena de créditos.
+    private void HandleVictory()
+    {
+        UIManager.ShowVictoryText();
+        StartCoroutine(GoToCreditsScene());
+    }
+
+    // Corrotina que aguarda alguns segundos antes de carregar a cena de créditos.
+    private IEnumerator GoToCreditsScene()
+    {
+        // Aguarda 3 segundos antes de continuar.
+        yield return new WaitForSeconds(3f);
+
+        // Carrega a cena de créditos.
+        SceneManager.LoadScene("Credits");
     }
 
     // Método público chamado para atualizar a contagem de chaves restantes no jogo.

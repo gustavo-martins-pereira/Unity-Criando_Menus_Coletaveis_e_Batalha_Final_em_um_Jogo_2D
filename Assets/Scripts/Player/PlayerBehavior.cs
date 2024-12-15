@@ -66,7 +66,7 @@ public class PlayerBehavior : MonoBehaviour
     }
 
     // Método chamado a cada frame para atualizar o estado do jogador.
-    private void Update()
+    private void FixedUpdate()
     {
         // Obtém o valor de entrada de movimento horizontal do jogador.
         float moveDirection = GameManager.Instance.InputManager.Movement;

@@ -1,42 +1,50 @@
 using TMPro;
 using UnityEngine;
 
-// Classe responsável por gerenciar a interface do usuário (UI) no jogo.
-// Inclui a lógica para alternar o menu de pausa, abrir o painel de opções e atualizar textos dinâmicos na interface.
+// Classe responsável por gerenciar a interface do usuário no jogo, controlando textos dinâmicos e painéis de UI.
 public class UIManager : MonoBehaviour
 {
-    // Referência ao texto que exibe a quantidade de chaves restantes.
+    // Referência ao componente TextMeshProUGUI que exibe o texto com a quantidade de chaves restantes.
     [SerializeField] private TextMeshProUGUI keysText;
 
-    // Referência ao texto que exibe a quantidade de vidas restantes.
+    // Referência ao componente TextMeshProUGUI que exibe o texto com a quantidade de vidas restantes.
     [SerializeField] private TextMeshProUGUI livesText;
 
-    // Cabeçalho para organizar os campos de painéis no Inspector.
+    // Referência ao componente TextMeshProUGUI que exibe o texto de vitória.
+    [SerializeField] private TextMeshProUGUI victoryText;
+
+    // Cabeçalho para organizar os campos relacionados a painéis no inspetor do Unity.
     [Header("Panels")]
 
-    // Referência ao painel de opções do jogo, configurável no Inspector.
+    // Referência ao painel de opções do jogo. Este painel é configurado no inspetor do Unity.
     [SerializeField] private GameObject OptionsPanel;
 
-    // Referência ao painel de pausa do jogo, configurável no Inspector.
+    // Referência ao painel de pausa do jogo. Este painel é configurado no inspetor do Unity.
     [SerializeField] private GameObject PausePanel;
 
-    // Método chamado automaticamente pela Unity durante a inicialização do objeto.
-    // Configura os painéis para ficarem desativados inicialmente.
+    // Referência ao painel de "Game Over" do jogo. Este painel é configurado no inspetor do Unity.
+    [SerializeField] private GameObject GameOverPanel;
+
+    // Método chamado automaticamente durante a fase de inicialização do objeto.
     private void Awake()
     {
-        // Garante que o painel de opções esteja invisível ao iniciar o jogo.
+        // Desativa o texto de vitória ao iniciar o jogo.
+        victoryText.gameObject.SetActive(false);
+
+        // Desativa o painel de opções para garantir que ele não esteja visível no início do jogo.
         OptionsPanel.SetActive(false);
 
-        // Garante que o painel de pausa esteja invisível ao iniciar o jogo.
+        // Desativa o painel de pausa para garantir que ele não esteja visível no início do jogo.
         PausePanel.SetActive(false);
+
+        // Desativa o painel de "Game Over" para garantir que ele não esteja visível no início do jogo.
+        GameOverPanel.SetActive(false);
     }
 
-    // Método chamado automaticamente pela Unity após o método Awake.
-    // Inscreve o método de abrir/fechar o menu de pausa no evento do InputManager.
+    // Método chamado automaticamente após o Awake para conectar eventos e configurar o comportamento inicial.
     private void Start()
     {
         // Conecta o evento OnMenuOpenClose do InputManager ao método OpenClosePauseMenu.
-        // Permite alternar o menu de pausa com base na entrada do jogador.
         GameManager.Instance.InputManager.OnMenuOpenClose += OpenClosePauseMenu;
     }
 
@@ -46,40 +54,48 @@ public class UIManager : MonoBehaviour
         // Verifica se o painel de pausa está atualmente desativado.
         if (PausePanel.activeSelf == false)
         {
-            // Ativa o painel de pausa, tornando-o visível.
+            // Ativa o painel de pausa.
             PausePanel.SetActive(true);
         }
         else
         {
-            // Desativa o painel de pausa, tornando-o invisível.
+            // Desativa o painel de pausa.
             PausePanel.SetActive(false);
         }
     }
 
-    // Método responsável por abrir o painel de opções.
-    // Pode ser chamado a partir de um botão na interface do usuário.
+    // Método responsável por abrir o painel de opções do jogo.
     public void OpenOptionsPanel()
     {
-        // Ativa o painel de opções, tornando-o visível.
+        // Ativa o painel de opções.
         OptionsPanel.SetActive(true);
     }
 
-    // Método para atualizar o texto que exibe a quantidade de chaves restantes e o total.
-    // Parâmetros:
-    // - totalValue: O número total de chaves.
-    // - leftValue: O número de chaves que ainda não foram coletadas.
+    // Método responsável por abrir o painel de "Game Over".
+    public void OpenGamerOverPanel()
+    {
+        // Ativa o painel de "Game Over".
+        GameOverPanel.SetActive(true);
+    }
+
+    // Método responsável por exibir o texto de vitória na tela.
+    public void ShowVictoryText()
+    {
+        // Ativa o objeto de texto de vitória.
+        victoryText.gameObject.SetActive(true);
+    }
+
+    // Método para atualizar o texto que exibe o número de chaves restantes e o número total de chaves.
     public void UpdateKeysLeftText(int totalValue, int leftValue)
     {
-        // Define o texto no formato "restantes/total".
+        // Atualiza o texto exibido com o formato "chaves restantes / total de chaves".
         keysText.text = $"{leftValue}/{totalValue}";
     }
 
-    // Método para atualizar o texto que exibe a quantidade de vidas restantes.
-    // Parâmetros:
-    // - lives: O número de vidas restantes.
+    // Método para atualizar o texto que exibe o número de vidas restantes.
     public void UpdateLivesText(int lives)
     {
-        // Define o texto como o número de vidas restantes.
+        // Atualiza o texto exibido com o número de vidas restantes.
         livesText.text = $"{lives}";
     }
 }
