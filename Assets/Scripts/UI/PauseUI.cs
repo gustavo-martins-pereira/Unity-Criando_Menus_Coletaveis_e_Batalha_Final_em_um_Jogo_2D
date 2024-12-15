@@ -3,49 +3,63 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 // Classe responsável pela lógica do menu de pausa no jogo.
-// Essa classe gerencia a interação dos botões de pausa, como continuar o jogo,
-// abrir o menu de opções ou retornar ao menu principal.
+// Gerencia as interações do jogador com os botões do menu de pausa, como continuar o jogo,
+// acessar o menu de opções ou retornar ao menu principal.
 public class PauseUI : MonoBehaviour
 {
-    // Referências aos botões da interface do menu de pausa.
-    // Essas referências são configuradas no Inspetor do Unity (usando [SerializeField]).
-    [SerializeField] private Button continueButton;     // Botão para continuar o jogo.
-    [SerializeField] private Button optionsButton;      // Botão para abrir o menu de opções.
-    [SerializeField] private Button quitToMenuButton;   // Botão para retornar ao menu principal.
+    // Referência ao botão "Continuar" no menu de pausa.
+    // Permite que uma ação seja executada quando o jogador clica neste botão.
+    [SerializeField] private Button continueButton;
 
-    // Método chamado pela Unity quando o script é inicializado.
-    // Configura os listeners para os botões, associando ações específicas a cada um.
+    // Referência ao botão "Opções" no menu de pausa.
+    // Utilizado para abrir o menu de opções quando clicado.
+    [SerializeField] private Button optionsButton;
+
+    // Referência ao botão "Sair para o Menu Principal" no menu de pausa.
+    // Executa a ação de retornar ao menu principal do jogo.
+    [SerializeField] private Button quitToMenuButton;
+
+    // Método chamado automaticamente pela Unity quando o script é inicializado.
+    // Configura os eventos de clique (listeners) para cada botão do menu de pausa.
     private void Awake()
     {
-        // Associa o método `ClosePauseMenu` ao evento de clique do botão "Continuar".
+        // Adiciona um listener ao botão "Continuar" que chama o método ClosePauseMenu
+        // quando o botão é clicado.
         continueButton.onClick.AddListener(ClosePauseMenu);
 
-        // Associa o método `OpenOptionsMenu` ao evento de clique do botão "Opções".
+        // Adiciona um listener ao botão "Opções" que chama o método OpenOptionsMenu
+        // quando o botão é clicado.
         optionsButton.onClick.AddListener(OpenOptionsMenu);
 
-        // Associa o método `GoToMainMenu` ao evento de clique do botão "Sair para o Menu Principal".
+        // Adiciona um listener ao botão "Sair para o Menu Principal" que chama o método GoToMainMenu
+        // quando o botão é clicado.
         quitToMenuButton.onClick.AddListener(GoToMainMenu);
     }
 
-    // Método chamado quando o jogador clica no botão "Continuar".
-    // Fecha o menu de pausa, desativando o GameObject associado.
+    // Método responsável por fechar o menu de pausa.
+    // Chamado quando o jogador clica no botão "Continuar".
     private void ClosePauseMenu()
     {
-        gameObject.SetActive(false); // Desativa o menu de pausa na interface.
+        // Desativa o GameObject associado ao menu de pausa,
+        // fazendo com que o menu desapareça da interface.
+        gameObject.SetActive(false);
     }
 
-    // Método chamado quando o jogador clica no botão "Opções".
-    // Abre o menu de opções, solicitando ao `UIManager` que exiba o painel de opções.
+    // Método responsável por abrir o menu de opções.
+    // Chamado quando o jogador clica no botão "Opções".
     private void OpenOptionsMenu()
     {
-        print("Opening options"); // Mensagem de depuração exibida no Console.
-        GameManager.Instance.UIManager.OpenOptionsPanel(); // Chama o método responsável por abrir o painel de opções.
+        // Acessa o GameManager para abrir o painel de opções
+        // utilizando o método disponível no UIManager.
+        GameManager.Instance.UIManager.OpenOptionsPanel();
     }
 
-    // Método chamado quando o jogador clica no botão "Sair para o Menu Principal".
-    // Carrega a cena principal do jogo (menu principal).
+    // Método responsável por retornar ao menu principal.
+    // Chamado quando o jogador clica no botão "Sair para o Menu Principal".
     private void GoToMainMenu()
     {
-        SceneManager.LoadScene("Menu"); // Transiciona para a cena chamada "Menu".
+        // Carrega a cena do menu principal,
+        // substituindo a cena atual pela cena chamada "Menu".
+        SceneManager.LoadScene("Menu");
     }
 }

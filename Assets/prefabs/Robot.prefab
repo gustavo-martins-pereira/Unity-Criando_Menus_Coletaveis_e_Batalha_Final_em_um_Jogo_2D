@@ -204,6 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fc31b3a33d1f649baeb4b29675f796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitParticle: {fileID: 9027514048236820043, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
   detectPosition: {fileID: 8868188837950146307}
   detectBoxSize: {x: 0.3, y: 1}
   playerLayer:

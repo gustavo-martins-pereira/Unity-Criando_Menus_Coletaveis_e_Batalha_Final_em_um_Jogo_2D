@@ -28,12 +28,18 @@ URL do curso -> [Unity: Criando Menus, Coletáveis e Batalha Final em um Jogo 2D
 * Acessar e manipular o audio mixer na Unity para ajustar volumes de diferentes grupos de áudio.
 * Expor parâmetros de áudio na Unity para permitir a manipulação desses valores através de scripts.
 
-## 02 -Inserindo Coletáveis no Jogo
+## 02 - Inserindo Coletáveis no Jogo
 * Criar objetos coletáveis na cena para fazer com o que o jogador possa capturá-los.
 * Implementar uma interface no jogo para o jogador identificar a quantidade de coletáveis que estão no jogo de forma dinâmica.
 * Implementar um evento quando todas os itens são coletados para abrir a área do Chefão no jogo.
 * Transformar um objeto de jogo em um prefab para facilitar a criação e gerenciamento de múltiplos itens iguais na Unity.
 * Utilizar o método FindObjectsOfType para encontrar todos os objetos de um tipo específico na cena.
+
+## 03 - Adicionando Efeitos e o Chefão
+* Utilizar o sistema de partículas da Unity para adicionar efeitos visuais de dano.
+* Entender como o sistema de partículas funciona e como ativá-lo via script.
+* Criar os comportamentos para o chefão do jogo, para avançar rumo a batalha final.
+* Reutilizar os assets que temos no projeto, a fim de otimizar a produtividade.
 
 ## :black_nib: Licença
 [Unlicense](https://unlicense.org)
