@@ -8664,6 +8664,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: keyGreen (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5710210802694192041, guid: e0cb0de382f64674e9d19b8c8e4421a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8893,6 +8897,97 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 317873161}
   m_CullTransparentMesh: 1
+--- !u!1 &335724050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 335724051}
+  - component: {fileID: 335724052}
+  - component: {fileID: 335724053}
+  m_Layer: 0
+  m_Name: BossFightTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &335724051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335724050}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 51.88, y: -11.16, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1478032005}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &335724052
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335724050}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -2.3576584, y: 0.098824024}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.1976471, y: 4.1341314}
+  m_EdgeRadius: 0
+--- !u!114 &335724053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335724050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff2e024f64e8a6548b6613bbea5d1ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &386659317
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8944,6 +9039,10 @@ PrefabInstance:
     - target: {fileID: 5710210802694192041, guid: e0cb0de382f64674e9d19b8c8e4421a3, type: 3}
       propertyPath: m_Name
       value: keyGreen (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710210802694192041, guid: e0cb0de382f64674e9d19b8c8e4421a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9214,7 +9313,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 54.94, y: -13.39, z: -10}
+  m_LocalPosition: {x: 45.85, y: -7.38, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9639,7 +9738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &727871067
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10293,6 +10392,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: keyGreen (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5710210802694192041, guid: e0cb0de382f64674e9d19b8c8e4421a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10444,7 +10547,7 @@ GameObject:
   - component: {fileID: 1187933069}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10513,7 +10616,7 @@ Transform:
   m_GameObject: {fileID: 1187933060}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 54.94, y: -13.39, z: 0}
+  m_LocalPosition: {x: 45.85, y: -7.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11320,6 +11423,7 @@ Transform:
   - {fileID: 134361721}
   - {fileID: 1520893071}
   - {fileID: 1872579139}
+  - {fileID: 335724051}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1520893070
@@ -12697,7 +12801,7 @@ Transform:
   m_GameObject: {fileID: 1814952743}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 54.94, y: -13.39, z: -10}
+  m_LocalPosition: {x: 45.85, y: -7.38, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12717,7 +12821,9 @@ GameObject:
   - component: {fileID: 1847696394}
   - component: {fileID: 1847696393}
   - component: {fileID: 1847696397}
-  m_Layer: 0
+  - component: {fileID: 1847696398}
+  - component: {fileID: 1847696399}
+  m_Layer: 7
   m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12889,6 +12995,38 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1847696398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847696392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 188e0147c83f83c478c3c32f2bd1c081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 7
+  attackRange: 2
+  attackSize: 2.5
+  attackOffset: {x: 1, y: -0.5, z: 0}
+  attackMask:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &1847696399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847696392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6a2d8891350cd946956d339d7412556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lives: 5
 --- !u!1 &1857652854
 GameObject:
   m_ObjectHideFlags: 0
@@ -13023,6 +13161,7 @@ GameObject:
   - component: {fileID: 1872579139}
   - component: {fileID: 1872579141}
   - component: {fileID: 1872579140}
+  - component: {fileID: 1872579142}
   m_Layer: 0
   m_Name: BossDoor
   m_TagString: Untagged
@@ -13197,6 +13336,52 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!61 &1872579142
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872579138}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 48.478455, y: -10.483886}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.0430908, y: 3.0322285}
+  m_EdgeRadius: 0
 --- !u!4 &1887097737 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 67958976379314688, guid: e6713596940ce954087f6949c4e7df3b, type: 3}
@@ -13422,6 +13607,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: keyGreen
       objectReference: {fileID: 0}
+    - target: {fileID: 5710210802694192041, guid: e0cb0de382f64674e9d19b8c8e4421a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13436,6 +13625,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 720457141936093986, guid: 2ba90ad446dde4946afeaeed2f46a967, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1187933063}
+    - target: {fileID: 720457141936093986, guid: 2ba90ad446dde4946afeaeed2f46a967, type: 3}
       propertyPath: bossDoor
       value: 
       objectReference: {fileID: 1872579138}
@@ -13443,6 +13636,14 @@ PrefabInstance:
       propertyPath: UIManager
       value: 
       objectReference: {fileID: 1170905287}
+    - target: {fileID: 720457141936093986, guid: 2ba90ad446dde4946afeaeed2f46a967, type: 3}
+      propertyPath: bossBehavior
+      value: 
+      objectReference: {fileID: 1847696398}
+    - target: {fileID: 720457141936093986, guid: 2ba90ad446dde4946afeaeed2f46a967, type: 3}
+      propertyPath: bossFightTrigger
+      value: 
+      objectReference: {fileID: 335724053}
     - target: {fileID: 2487924501798454668, guid: 2ba90ad446dde4946afeaeed2f46a967, type: 3}
       propertyPath: m_Name
       value: GameManager

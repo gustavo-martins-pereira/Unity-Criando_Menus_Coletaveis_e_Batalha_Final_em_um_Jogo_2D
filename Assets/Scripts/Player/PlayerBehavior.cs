@@ -80,11 +80,13 @@ public class PlayerBehavior : MonoBehaviour
         // Atualiza a orientação do sprite do jogador com base na direção do movimento.
         if (vectorMoveDirection.x > 0)
         {
-            spriteRenderer.flipX = false; // Se estiver indo para a direita, mantém o sprite normal.
+            // Se estiver indo para a direita, mantém o sprite normal.
+            spriteRenderer.flipX = false;
         }
         else if (vectorMoveDirection.x < 0)
         {
-            spriteRenderer.flipX = true; // Se estiver indo para a esquerda, inverte o sprite.
+            // Se estiver indo para a esquerda, inverte o sprite.
+            spriteRenderer.flipX = true;
         }
     }
 
@@ -168,6 +170,9 @@ public class PlayerBehavior : MonoBehaviour
 
         // Reproduz o som correspondente à morte do jogador.
         GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerDeath);
+
+        // Atualiza o texto de vidas na interface do usuário.
+        GameManager.Instance.UIManager.UpdateLivesText(health.GetLives());
     }
 
     // Método responsável por instanciar e reproduzir partículas de impacto.

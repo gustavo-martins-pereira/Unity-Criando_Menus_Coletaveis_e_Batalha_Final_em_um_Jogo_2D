@@ -1,81 +1,110 @@
-using System;
 using UnityEngine;
 
 // Classe responsável por gerenciar o estado geral do jogo e disponibilizar sistemas centrais.
 // Implementa o padrão Singleton para garantir que apenas uma instância do GameManager exista no jogo.
 public class GameManager : MonoBehaviour
 {
-    // Declaração de uma instância estática única para o GameManager.
+    // Declaração de uma instância estática única para o GameManager, usada para acessar o GameManager de forma global.
     public static GameManager Instance;
 
-    // Declaração de uma variável pública para o gerenciador de áudio do jogo.
+    // Referência pública ao gerenciador de áudio do jogo, permitindo acesso e controle de sons e música.
     public AudioManager AudioManager;
 
-    // Declaração de uma propriedade para gerenciar as entradas do jogador.
+    // Propriedade que armazena uma instância do gerenciador de entradas do jogador.
+    // A propriedade é somente leitura externamente, mas pode ser definida internamente.
     public InputManager InputManager { get; private set; }
 
-    // Declaração de um campo serializado para armazenar uma referência ao GameObject que representa a porta do chefe.
+    // Referência serializada para o GameObject que representa a porta do chefe.
+    // Essas referências são atribuídas diretamente no inspetor do Unity.
     [Header("Dynamic GameObjects")]
     [SerializeField] private GameObject bossDoor;
 
-    // Declaração de uma variável pública para gerenciar a interface do usuário do jogo.
+    // Referência ao comportamento do jogador.
+    [SerializeField] private PlayerBehavior player;
+
+    // Referência ao comportamento do chefe.
+    [SerializeField] private BossBehavior bossBehavior;
+
+    // Referência ao componente responsável por detectar a entrada do jogador na área de ativação da luta contra o chefe.
+    [SerializeField] private BossFightTrigger bossFightTrigger;
+
+    // Referência ao gerenciador da interface do usuário, responsável por atualizar elementos visuais no jogo.
     [Header("Managers")]
     public UIManager UIManager;
 
-    // Declaração de uma variável para armazenar o total de chaves no jogo.
+    // Variável privada que armazena o número total de chaves no jogo.
     private int totalKeys;
 
-    // Declaração de uma variável para rastrear quantas chaves ainda estão faltando.
+    // Variável privada que armazena o número de chaves restantes a serem coletadas.
     private int keysLeft;
 
-    // Método chamado automaticamente pela Unity antes do método Start para inicializar o script.
+    // Método chamado automaticamente pelo Unity antes do método Start.
+    // Usado para inicializar variáveis e configurar o estado inicial do script.
     private void Awake()
     {
         // Verifica se já existe uma instância do GameManager ativa na cena.
         if (Instance != null)
         {
-            // Destroi este objeto caso outra instância já exista, evitando duplicações no Singleton.
+            // Caso outra instância exista, este objeto é destruído para garantir que apenas uma instância exista.
             Destroy(this.gameObject);
             return;
         }
 
-        // Atribui a instância atual ao campo estático Instance, definindo este objeto como a instância única do GameManager.
+        // Define a instância atual como a única instância do GameManager.
         Instance = this;
 
-        // Obtém o total de objetos do tipo Key na cena e atribui à variável totalKeys.
+        // Obtém todos os objetos do tipo Key na cena e atribui o número total à variável totalKeys.
         totalKeys = FindObjectsByType<Key>(FindObjectsSortMode.None).Length;
 
-        // Inicializa a variável keysLeft com o total de chaves encontradas.
+        // Inicializa a variável keysLeft com o valor de totalKeys.
         keysLeft = totalKeys;
 
-        // Cria uma nova instância do InputManager para gerenciar as entradas do jogador.
+        // Cria uma nova instância do InputManager, responsável por gerenciar as entradas do jogador.
         this.InputManager = new InputManager();
 
-        // Atualiza o texto na interface do usuário para exibir o total de chaves e as chaves restantes.
+        // Atualiza o texto da interface do usuário para exibir o total de chaves e o número de chaves restantes.
         UIManager.UpdateKeysLeftText(totalKeys, keysLeft);
+
+        // Inscreve o método ActivateBossBehavior ao evento OnPlayerEnterBossFight do BossFightTrigger.
+        // Isso garante que o comportamento do chefe seja ativado quando o jogador entrar na área de ativação.
+        bossFightTrigger.OnPlayerEnterBossFight += ActivateBossBehavior;
     }
 
-    // Método chamado para atualizar a contagem de chaves restantes.
+    // Método chamado quando o evento OnPlayerEnterBossFight é disparado.
+    // Ativa o comportamento do chefe, iniciando a perseguição ao jogador.
+    private void ActivateBossBehavior()
+    {
+        bossBehavior.StartChasing();
+    }
+
+    // Método público chamado para atualizar a contagem de chaves restantes no jogo.
     public void UpdateKeysLeft()
     {
         // Decrementa o número de chaves restantes.
         keysLeft--;
 
-        // Atualiza a interface do usuário com os valores atualizados de totalKeys e keysLeft.
+        // Atualiza o texto na interface do usuário com os valores atualizados de totalKeys e keysLeft.
         UIManager.UpdateKeysLeftText(totalKeys, keysLeft);
 
         // Verifica se todas as chaves foram coletadas.
         CheckAllKeysCollected();
     }
 
-    // Método privado para verificar se todas as chaves foram coletadas.
+    // Método privado que verifica se todas as chaves foram coletadas pelo jogador.
     private void CheckAllKeysCollected()
     {
-        // Verifica se o número de chaves restantes é menor ou igual a zero.
+        // Se o número de chaves restantes for menor ou igual a zero, significa que todas as chaves foram coletadas.
         if (keysLeft <= 0)
         {
-            // Destrói o GameObject que representa a porta do chefe, permitindo a passagem.
+            // Destroi o GameObject que representa a porta do chefe, permitindo ao jogador acessar a próxima área.
             Destroy(bossDoor);
         }
+    }
+
+    // Método público para obter a referência ao comportamento do jogador.
+    // Retorna o objeto PlayerBehavior armazenado no campo player.
+    public PlayerBehavior GetPlayer()
+    {
+        return player;
     }
 }

@@ -41,5 +41,11 @@ URL do curso -> [Unity: Criando Menus, Coletáveis e Batalha Final em um Jogo 2D
 * Criar os comportamentos para o chefão do jogo, para avançar rumo a batalha final.
 * Reutilizar os assets que temos no projeto, a fim de otimizar a produtividade.
 
+## 04 - Iniciando a Batalha com o Chefão
+* Utilizar a máquina de estados para criar comportamentos específicos no chefão.
+* Funciona o StateMachineBehavior e como utilizar os métodos apropriadamente para realizar transições de estado de animação.
+* Corrigir a movimentação do chefão para que ele interaja com os objetos na cena da forma que planejamos.
+* Utilizar o parâmetro trigger do componente Collider2D para acionar o comportamento do chefão apenas quando necessário.
+
 ## :black_nib: Licença
 [Unlicense](https://unlicense.org)
